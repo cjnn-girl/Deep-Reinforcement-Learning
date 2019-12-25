@@ -6,9 +6,9 @@
 
 import numpy as np
 import sys
-from six import StringIO, b
-from pprint import PrettyPrinter
-get_ipython().run_line_magic('pprint', '')
+from six import StringIO#, b
+#from pprint import PrettyPrinter
+#get_ipython().run_line_magic('pprint', '')
 
 from gym import utils
 from gym.envs.toy_text import discrete
@@ -17,7 +17,7 @@ from gym.envs.toy_text import discrete
 # In[60]:
 
 
-pp = PrettyPrinter(indent=2)
+#pp = PrettyPrinter(indent=2)
 
 UP = 0
 RIGHT = 1
@@ -57,9 +57,9 @@ class GridworldEnv(discrete.DiscreteEnv):
     """
     metadata = {'render.modes': ['human', 'ansi']}
     
-    def __init__(self, desc=None, map_name='4x4'):
-        self.desc = desc = np.asarray(MAPS[map_name], dtype='c')
-        self.nrow, self.ncol = nrow, ncol = desc.shape
+    def __init__(self, desc=None):
+        self.desc = desc 
+        #self.nrow, self.ncol = nrow, ncol = desc.shape
         self.shape = desc.shape
         
         nA = 4                    # 动作集个数
@@ -140,8 +140,9 @@ class GridworldEnv(discrete.DiscreteEnv):
 
         if mode != 'human':
             return outfile
-        
-env = GridworldEnv()
+
+desc = np.asarray(MAPS['4x4'], dtype='c')       
+env = GridworldEnv(desc=desc)
 
 
 # In[62]:
@@ -149,7 +150,7 @@ env = GridworldEnv()
 
 observation = env.reset()
 for _ in range(5):
-    env.render()
+    env._render()
     action = env.action_space.sample()
     observation, reward, done, info = env.step(action)
     print("action:{}({})".format(action, ["Up","Right","Down","Left"][action]))
